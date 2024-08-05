@@ -2,14 +2,16 @@ package com.jojoidu.book.service.posts;
 
 import com.jojoidu.book.domain.posts.Posts;
 import com.jojoidu.book.domain.posts.PostsRepository;
+import com.jojoidu.book.web.dto.PostsListResponseDto;
 import com.jojoidu.book.web.dto.PostsResponseDto;
 import com.jojoidu.book.web.dto.PostsSaveRequestDto;
 import com.jojoidu.book.web.dto.PostsUpdateRequestsDto;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -37,5 +39,9 @@ public class PostsService {
     }
 
     @Transactional(readOnly = true)
-    public List
+    public List<PostsListResponseDto> findAllDesc(){
+        return postsRepository.findAllDesc().stream()
+                .map(PostsListResponseDto::new)
+                .collect(Collectors.toList());
+    }
 }
